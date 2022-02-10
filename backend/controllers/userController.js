@@ -96,7 +96,18 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   /api/users/me
 // @access  Private
 const getMe = asyncHandler(async (req, res) => {
-  res.send('me')
+  const user = {
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.name
+  }
+  // get user by id cause now we have access to it cause authMiddlware
+  res.status(200).json(user)
+  /**{
+    "id": "620591f773d57837dfa04f98",
+    "email": "cookie@gmail.com",
+    "name": "cookie"
+  } */
 })
 
 
