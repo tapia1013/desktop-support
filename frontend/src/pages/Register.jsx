@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaUser } from 'react-icons/fa';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { register, reset } from '../features/auth/authSlice';
 
 
 function Register() {
@@ -12,6 +16,29 @@ function Register() {
   });
 
   const { name, email, password, password2 } = formData;
+
+  // Redux
+  const dispatch = useDispatch();
+
+  // React router dom
+  const navigate = useNavigate()
+
+  // we want to get authSlice values... Redux
+  const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
+
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    // Redirect when logged is successful
+    if (isSuccess === true || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [isError, isSuccess, user, message, navigate, dispatch])
 
 
   const onChange = (e) => {
@@ -27,6 +54,14 @@ function Register() {
 
     if (password !== password2) {
       toast.error('passwords do not match');
+    } else {
+      const userData = {
+        name,
+        email,
+        password
+      }
+
+      dispatch(register(userData))
     }
 
   }
@@ -96,7 +131,7 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <button className="btn btn-block">Submit</button>
+            <button type='submit' className="btn btn-block">Submit</button>
           </div>
         </form>
       </section>

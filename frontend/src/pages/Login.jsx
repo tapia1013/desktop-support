@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaSignInAlt } from 'react-icons/fa';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../features/auth/authSlice';
+
 
 
 function Login() {
@@ -10,6 +14,11 @@ function Login() {
   });
 
   const { email, password } = formData;
+
+
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isSuccess, message } = useSelector((state) => state.auth)
 
 
   const onChange = (e) => {
@@ -23,6 +32,13 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    // construct the user with redux
+    const userData = {
+      email,
+      password
+    }
+
+    dispatch(login(userData))
   }
 
 
