@@ -12,17 +12,22 @@ connectDB();
 
 const app = express();
 
+
 // allows us to send raw json
 app.use(express.json());
 // accept url encoded form
 app.use(express.urlencoded({ extended: false }));
 
+
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to support desk API' })
 })
 
+
 // Routes
 app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/tickets', require('./routes/ticketRoutes'))
+
 
 // Error handler
 app.use(errorHandler)
