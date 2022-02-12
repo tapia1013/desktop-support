@@ -11,7 +11,7 @@ import BackButton from '../components/BackButton';
 function NewTicket() {
   // get user from globalstate with redux useSelector
   const { user } = useSelector((state) => state.auth);
-  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.ticket);
+  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.tickets);
 
 
   const dispatch = useDispatch();
