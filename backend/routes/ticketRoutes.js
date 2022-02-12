@@ -1,9 +1,19 @@
 const express = require('express');
-const router = express.Router();
-const { getTickets, createTicket, getTicket, deleteTicket, updateTicket } = require('../controllers/ticketController');
+const router = express.Router({ mergeParams: true });
+const {
+  getTickets,
+  createTicket,
+  getTicket,
+  deleteTicket,
+  updateTicket
+} = require('../controllers/ticketController');
 
 
 const { protect } = require('../middleware/authMiddleware');
+
+// Re-route into note router
+const noteRouter = require('./noteRoutes')
+router.use('/:ticketId/notes', noteRouter)
 
 
 // router.route().get().post() etc.. we can chain on... (protect custom method, methods from CONTROLLER)
