@@ -1,11 +1,22 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { createTicket, reset } from '../features/tickets/ticketSlice';
+import Spinner from '../components/Spinner';
+import BackButton from '../components/BackButton';
 
 
 
 function NewTicket() {
   // get user from globalstate with redux useSelector
   const { user } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.ticket);
+
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   // set local state
   const [name] = useState(user.name);
@@ -14,14 +25,35 @@ function NewTicket() {
   const [description, setDescription] = useState('');
 
 
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (isSuccess) {
+      dispatch(reset());
+      navigate('/tickets')
+    }
+
+    dispatch(reset())
+  }, [dispatch, navigate, isError, isSuccess, message])
+
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    dispatch(createTicket({ product, description }))
+  }
+
+
+  if (isLoading) {
+    return <Spinner />
   }
 
 
   return (
     <>
+      <BackButton url='/' />
       <section className='heading'>
         <h1>Create New Ticket</h1>
         <p>Please fill out the form below</p>
