@@ -18,8 +18,8 @@ const getNotes = asyncHandler(async (req, res) => {
 
   const tickets = await Ticket.find(req.params.ticketId)
 
-  // make sure its the users ticket
-  if (tickets.user.toString() !== req.user.id) {
+  // make sure its the users ticket... if gives error tickets.user.toString() 
+  if (tickets.user !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized')
   }
@@ -47,7 +47,7 @@ const addNote = asyncHandler(async (req, res) => {
 
   const tickets = await Ticket.find(req.params.ticketId)
 
-  // make sure its the users ticket
+  // make sure its the users ticket... if gives error remove .toString() 
   if (tickets.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized')
