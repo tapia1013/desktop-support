@@ -32,6 +32,7 @@ Modal.setAppElement('#root')
 function Ticket() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
+
   const { ticket, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.tickets
   )
@@ -83,6 +84,7 @@ function Ticket() {
   if (isError) {
     return <h3>Something Went Wrong</h3>
   }
+
 
   return (
     <div className='ticket-page'>

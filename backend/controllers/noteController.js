@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const Note = require('../models/noteModel');
 const Ticket = require('../models/ticketModel');
 
+
 // @desc     Get notes for a ticket
 // @route    GET /api/tickets/:ticketId/notes
 // @access   Private
@@ -16,10 +17,10 @@ const getNotes = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 
-  const tickets = await Ticket.find(req.params.ticketId)
+  const ticket = await Ticket.findById(req.params.ticketId)
 
   // make sure its the users ticket
-  if (tickets.user.toString() !== req.user.id) {
+  if (ticket.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized')
   }
@@ -45,10 +46,10 @@ const addNote = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 
-  const tickets = await Ticket.find(req.params.ticketId)
+  const ticket = await Ticket.find(req.params.ticketId)
 
   // make sure its the users ticket
-  if (tickets.user.toString() !== req.user.id) {
+  if (ticket.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized')
   }

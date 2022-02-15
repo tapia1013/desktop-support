@@ -48,7 +48,7 @@ export const createNote = createAsyncThunk(
 
 
 export const noteSlice = createSlice({
-  name: 'notes',
+  name: 'note',
   initialState,
   reducers: {
     reset: (state) => initialState

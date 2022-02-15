@@ -2,6 +2,9 @@ import axios from 'axios'
 
 const API_URL = '/api/tickets/'
 
+
+
+
 // Get ticket notes
 const getNotes = async (ticketId, token) => {
   const config = {
@@ -14,6 +17,9 @@ const getNotes = async (ticketId, token) => {
 
   return response.data
 }
+
+
+
 
 // Create ticket note
 const createNote = async (noteText, ticketId, token) => {

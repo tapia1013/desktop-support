@@ -6,7 +6,7 @@ function TicketItem({ ticket }) {
   return (
     <div className='ticket'>
       <div>
-        {new Date(ticket.createdAt).toLocaleString('en-us')}
+        {new Date(ticket.createdAt).toLocaleString('en-US')}
       </div>
       <div>{ticket.product}</div>
       <div className={`status status-${ticket.status}`}>
